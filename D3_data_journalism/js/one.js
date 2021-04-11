@@ -291,47 +291,47 @@ d3.csv("./data/data.csv").then(function(stateData) {
       }
     
 
-       // y axis labels event listener
-  ylabelsGroup.selectAll("text")
-  .on("click", function() {
-    // get value of selection
-    var value = d3.select(this).attr("value");
-    if (value !== chosenYAxis) {
+          // y axis labels event listener
+      ylabelsGroup.selectAll("text")
+        .on("click", function() {
+        // get value of selection
+        var value = d3.select(this).attr("value");
+        if (value !== chosenYAxis) {
 
-      // replaces chosenYAxis with value
-      chosenYAxis = value;
+          // replaces chosenYAxis with value
+          chosenYAxis = value;
 
-      // functions here found above csv import
-      // updates y scale for new data
-      yLinearScale = yScale(stateData, chosenYAxis);
+          // functions here found above csv import
+          // updates y scale for new data
+          yLinearScale = yScale(stateData, chosenYAxis);
 
-      // updates u axis with transition
-      yAxis = renderYAxes(yLinearScale, yAxis);
+          // updates u axis with transition
+          yAxis = renderYAxes(yLinearScale, yAxis);
 
-      // updates circles with new y values
-      circlesGroup = renderCircles(circlesGroup, xLinearScale, chosenXAxis, yLinearScale, chosenYAxis);
+          // updates circles with new y values
+          circlesGroup = renderCircles(circlesGroup, xLinearScale, chosenXAxis, yLinearScale, chosenYAxis);
 
-      // updates tooltips with new info
-      circlesGroup = updateToolTip(chosenXAxis, chosenYAxis, circlesGroup);
+          // updates tooltips with new info
+          circlesGroup = updateToolTip(chosenXAxis, chosenYAxis, circlesGroup);
 
-      // changes classes to change bold text
-      if (chosenYAxis === "healthcare") {
-        healthcareLabel
-            .classed("active", true)
-            .classed("inactive", false);
-        smokesLabel
-            .classed("active", false)
-            .classed("inactive", true);
-        }
-        else {
-        healthcareLabel
-            .classed("active", false)
-            .classed("inactive", true);
-        smokesLabel
-            .classed("active", true)
-            .classed("inactive", false);
+          // changes classes to change bold text
+          if (chosenYAxis === "healthcare") {
+            healthcareLabel
+                .classed("active", true)
+                .classed("inactive", false);
+            smokesLabel
+                .classed("active", false)
+                .classed("inactive", true);
+            }
+            else {
+            healthcareLabel
+                .classed("active", false)
+                .classed("inactive", true);
+            smokesLabel
+                .classed("active", true)
+                .classed("inactive", false);
 
-        }
+            }
     }
   })
 }).catch(function(error) {
