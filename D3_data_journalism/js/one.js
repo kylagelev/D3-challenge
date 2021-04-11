@@ -1,5 +1,5 @@
-var svgWidth = 2000;
-var svgHeight = 1000;
+var svgWidth = 900;
+var svgHeight = 800;
 
 var margin = {
   top: 20,
@@ -15,7 +15,7 @@ var height = svgHeight - margin.top - margin.bottom;
 // Create an SVG wrapper, append an SVG group that will hold our chart,
 // and shift the latter by left and top margins.
 var svg = d3
-  .select(".chart")
+  .select("#chart")
   .append("svg")
   .attr("width", svgWidth)
   .attr("height", svgHeight);
@@ -82,10 +82,19 @@ function renderCircles(circlesGroup, newXScale, chosenXAxis, newYScale, chosenYA
   circlesGroup.transition()
     .duration(1000)
     .attr("cx", d => newXScale(d[chosenXAxis]))
-    .attr("cy", d => newYScale(d[chosenYAxis])-50);
+    .attr("cy", d => newYScale(d[chosenYAxis]));
 
   return circlesGroup;
 }
+
+// function renderCirclesnames(circlesState, newXScale, chosenXAxis, newYScale, chosenYAxis) {
+//     circlesState.transition()
+//       .duration(1000)
+//       .attr("x", d => newXScale(d[chosenXAxis]))
+//       .attr("y", d => newYScale(d[chosenYAxis])+5);
+
+//   return circlesState;
+// }
 
 
 //--------------------------------------------------------------
@@ -115,8 +124,8 @@ function updateToolTip(chosenXAxis, chosenYAxis, circlesGroup) {
 
 //tooltip
   var toolTip = d3.tip()
-    .attr("class", "tooltip")
-    .offset([0, -100])
+    .attr("class", "d3-tip")
+    .offset([0, -85])
     .html(function(d) {
       return (`${d.state}<br>${xlabel} ${d[chosenXAxis]} <br>${ylabel} ${d[chosenYAxis]}`);
     });
@@ -170,6 +179,101 @@ d3.csv("./data/data.csv").then(function(stateData) {
     var yAxis = chartGroup.append("g")
         .classed("y-axis", true)
         .call(leftAxis);
+
+    // var circlesState = chartGroup.selectAll(null).data(stateData).enter().append("text");
+
+    // function updatecirclesState (chosenXAxis, chosenYAxis) {
+    //   var circlesState
+    //     .attr("x", function(d) {
+    //         return xLinearScale(d[chosenXAxis]);
+    //         })
+    //     .attr("y", function(d) {
+    //         return yLinearScale(d[chosenYAxis]);
+    //         })
+    //     .text(function(d) {
+    //         return d.abbr;
+    //         })
+    //     .attr("font-family", "sans-serif")
+    //     .attr("font-size", "12px")
+    //     .attr("text-anchor", "middle")
+    //     .attr("fill", "black");
+
+    //     }
+
+
+    //     // Create a circle text group for the state text abbreviations
+    //     var circleTextGroup=chartGroup.selectAll(".stateText")
+    //     .data(data);
+
+    //     // Step over the text that is already in the graph for the axes labels.
+    //     // Then add new text elements with the stateText class, with x and y locations
+    //     // based on the selected X and Y axes
+    //     // This is set up here to set the initial locations of the circle text group (state abbr)
+    //     circleTextGroup.enter()
+    //         .append("text")
+    //         .classed("stateText", true)
+    //         .merge(circleTextGroup)
+    //         .attr("x", d=>xLinearScale(d[chosenXAxis]))
+    //         .attr("y", d=>yLinearScale(d[chosenYAxis])+5)
+    //         .html(d => d.abbr);
+        
+    //     circleTextGroup.exit().remove();
+
+    // // Set up a function that will update the circle text group when new axes are selected
+    // function updateCircleTextGroup(data) {
+    //     circleTextGroup = chartGroup.selectAll(".stateText")
+    //     .data(data);
+
+    //     circleTextGroup.enter()
+    //         .append("text")
+    //         .classed("stateText", true)
+    //         .merge(circleTextGroup)
+    //         .html(d => d.abbr);
+
+    //     circleTextGroup.exit().remove();
+
+    //     return circleTextGroup
+    // }
+
+
+
+
+    //--------------------------------------------------------------------------------
+        // Create a circle text group for the state text abbreviations
+        var circleTextGroup=chartGroup.selectAll(".stateText")
+        .data(stateData);
+
+        // Step over the text that is already in the graph for the axes labels.
+        // Then add new text elements with the stateText class, with x and y locations
+        // based on the selected X and Y axes
+        // This is set up here to set the initial locations of the circle text group (state abbr)
+        circleTextGroup.enter()
+            .append("text")
+            .classed("stateText", true)
+            .merge(circleTextGroup)
+            .attr("x", d=>xLinearScale(d[chosenXAxis]))
+            .attr("y", d=>yLinearScale(d[chosenYAxis])+5)
+            .html(d => d.abbr);
+        
+        circleTextGroup.exit().remove();
+
+    // Set up a function that will update the circle text group when new axes are selected
+    function updateCircleTextGroup(data) {
+        circleTextGroup = chartGroup.selectAll(".stateText")
+        .data(data);
+
+        circleTextGroup.enter()
+            .append("text")
+            .classed("stateText", true)
+            .merge(circleTextGroup)
+            .html(d => d.abbr);
+
+        circleTextGroup.exit().remove();
+
+        return circleTextGroup
+    }
+
+    //--------------------------------------------------------------------------------
 
       // append initial circles
     var circlesGroup = chartGroup.selectAll("circle")
@@ -283,6 +387,9 @@ d3.csv("./data/data.csv").then(function(stateData) {
         // updates circles with new x values
         circlesGroup = renderCircles(circlesGroup, xLinearScale, chosenXAxis, yLinearScale, chosenYAxis);
 
+        //update circle with text inside
+        circleTextGroup = renderCircleText(updateCircleTextGroup(stateData), xLinearScale, chosenXAxis, yLinearScale, chosenYAxis);
+
         // updates tooltips with new info
         circlesGroup = updateToolTip(chosenXAxis, chosenYAxis, circlesGroup);
 
@@ -330,16 +437,19 @@ d3.csv("./data/data.csv").then(function(stateData) {
           // updates circles with new y values
           circlesGroup = renderCircles(circlesGroup, xLinearScale, chosenXAxis, yLinearScale, chosenYAxis);
 
+          //update circle with text inside
+          circleTextGroup = renderCircleText(updateCircleTextGroup(stateData), xLinearScale, chosenXAxis, yLinearScale, chosenYAxis);
+
           // updates tooltips with new info
           circlesGroup = updateToolTip(chosenXAxis, chosenYAxis, circlesGroup);
 
           // changes classes to change bold text
         // changes classes to change bold text
         if (chosenYAxis === "healthcare") {
-          povertyLabel
+          healthcareLabel
               .classed("active", true)
               .classed("inactive", false);
-          ageLabel
+          smokesLabel
               .classed("active", false)
               .classed("inactive", true);
           // incomeLabel
