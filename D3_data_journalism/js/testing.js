@@ -32,8 +32,6 @@ d3.csv("./data/data.csv").then(function(stateData) {
         data.healthcare = +data.healthcare;
         data.age = +data.age;
         data.smokes = +data.smokes;
-
-        console.log(data.poverty)
     });
 
 
