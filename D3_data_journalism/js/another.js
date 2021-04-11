@@ -17,11 +17,15 @@ var svg = d3
   .attr("width", svgWidth)
   .attr("height", svgHeight);
 
-  var chartGroup = svg.append("g")
+  var xchartGroup = svg.append("g")
   .attr("transform", `translate(${margin.left}, ${margin.top})`);
+
+  var ychartGroup = svg.append("g")
+  .attr("transform", `translate(${margin.right}, ${margin.bottom})`);
 
 // Initial Params
 var chosenXAxis = "poverty";
+var chosenYAxis = "healthcare";
 
 // function used for updating x-scale var upon click on axis label
 function xScale(stateData, chosenXAxis) {
@@ -148,11 +152,11 @@ d3.csv("./data/data.csv").then(function(stateData) {
 
     // append x axis
     var xAxis = xchartGroup.append("g")
-  .classed("x-axis", true)
-  .attr("transform", `translate(0, ${height})`)
-  .call(bottomAxis);
+        .classed("x-axis", true)
+        .attr("transform", `translate(0, ${height})`)
+    .call(bottomAxis);
 
-    // append x axis
+    // append y axis
     var yAxis = ychartGroup.append("g")
     .classed("y-axis", true)
     .attr("transform", `translate(0, ${height})`)
@@ -161,7 +165,7 @@ d3.csv("./data/data.csv").then(function(stateData) {
 
         // Step 5: Create Circles
     // ==============================
-    var circlesGroup = chartGroup.selectAll("circle")
+    var circlesGroup = xchartGroup.selectAll("circle")
     .data(stateData)
     .enter()
     .append("circle")
@@ -171,7 +175,7 @@ d3.csv("./data/data.csv").then(function(stateData) {
     .attr("fill", "pink")
     .attr("opacity", "1");
 
-    var circleLabels = chartGroup.selectAll(null).data(stateData).enter().append("text");
+    var circleLabels = xchartGroup.selectAll(null).data(stateData).enter().append("text");
 
     circleLabels
         .attr("x", function(d) {
@@ -234,11 +238,11 @@ var circlesGroup = updateToolTip(chosenXAxis, chosenYAxis, circlesGroup);
 xlabelsGroup.selectAll("text")
   .on("click", function() {
     // get value of selection
-    var value = d3.select(this).attr("value");
-    if (value !== chosenXAxis) {
+    var xvalue = d3.select(this).attr("value");
+    if (xvalue !== chosenXAxis) {
 
       // replaces chosenXAxis with value
-      chosenXAxis = value;
+      chosenXAxis = xvalue;
 
       // functions here found above csv import
       // updates x scale for new data
@@ -280,11 +284,11 @@ xlabelsGroup.selectAll("text")
 ylabelsGroup.selectAll("text")
   .on("click", function() {
     // get value of selection
-    var value = d3.select(this).attr("value");
-    if (value !== chosenYAxis) {
+    var yvalue = d3.select(this).attr("value");
+    if (yvalue !== chosenYAxis) {
 
       // replaces chosenXAxis with value
-      chosenYAxis = value;
+      chosenYAxis = yvalue;
 
       // functions here found above csv import
       // updates x scale for new data
