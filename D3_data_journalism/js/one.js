@@ -77,7 +77,7 @@ function renderYAxes(newYScale, yAxis) {
 
 // function used for updating circles group with a transition to
 // new circles
-function renderCircles(circlesGroup, newXScale, chosenXAxis, newYScale, chosenYAxis) {
+function renderCircles(circlesGroup, newXScale, newYScale, chosenXAxis, chosenYAxis) {
 
   circlesGroup.transition()
     .duration(1000)
@@ -86,16 +86,6 @@ function renderCircles(circlesGroup, newXScale, chosenXAxis, newYScale, chosenYA
 
   return circlesGroup;
 }
-
-// function renderCirclesnames(circlesState, newXScale, chosenXAxis, newYScale, chosenYAxis) {
-//     circlesState.transition()
-//       .duration(1000)
-//       .attr("x", d => newXScale(d[chosenXAxis]))
-//       .attr("y", d => newYScale(d[chosenYAxis])+5);
-
-//   return circlesState;
-// }
-
 
 //--------------------------------------------------------------
 
@@ -303,10 +293,13 @@ d3.csv("D3_data_journalism/data/data.csv").then(function(stateData) {
         xAxis = renderXAxes(xLinearScale, xAxis);
 
         // updates circles with new x values
-        circlesGroup = renderCircles(circlesGroup, xLinearScale, chosenXAxis, yLinearScale, chosenYAxis);
+        circlesGroup = renderCircles(circlesGroup, xLinearScale, yLinearScale, chosenXAxis, chosenYAxis);
 
         // updates tooltips with new info
         circlesGroup = updateToolTip(chosenXAxis, chosenYAxis, circlesGroup, stateabbr);
+
+        //update state abbr
+        stateabbr = updatecircletext(stateabbr, xLinearScale, yLinearScale, chosenXAxis, chosenYAxis)
 
         // changes classes to change bold text
         if (chosenXAxis === "poverty") {
@@ -350,10 +343,13 @@ d3.csv("D3_data_journalism/data/data.csv").then(function(stateData) {
               yAxis = renderYAxes(yLinearScale, yAxis);
 
               // updates circles with new y values
-              circlesGroup = renderCircles(circlesGroup, xLinearScale, chosenXAxis, yLinearScale, chosenYAxis);
+              circlesGroup = renderCircles(circlesGroup, xLinearScale, yLinearScale, chosenXAxis, chosenYAxis);
 
               // updates tooltips with new info
               circlesGroup = updateToolTip(chosenXAxis, chosenYAxis, circlesGroup, stareabbr);
+
+              //update state abbr
+              stateabbr = updatecircletext(stateabbr, xLinearScale, yLinearScale, chosenXAxis, chosenYAxis)
 
               // changes classes to change bold text
             // changes classes to change bold text
