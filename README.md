@@ -12,4 +12,5 @@ Also, includes a few of my own insights based on the graph on the actual webpage
 Feel free to play around and get develop your own insights!
 
 Launched using Github Pages.
+![D3 Webpage](/images/D)
 
