@@ -130,10 +130,16 @@ function updateToolTip(chosenXAxis, chosenYAxis, circlesGroup) {
 
   circlesGroup.on("mouseover", function(data) {
     toolTip.show(data, this);
+    d3.select(this)
+    .style("stroke", "black")
+    .style("opacity", 1)
   })
     // onmouseout event
     .on("mouseout", function(data, index) {
       toolTip.hide(data);
+      d3.select(this)
+      .style("stroke", "none")
+      
     });
 
   return circlesGroup;
@@ -198,7 +204,7 @@ d3.csv("D3_data_journalism/data/data.csv").then(function(stateData) {
         .append("circle")
         .attr("cx", d => xLinearScale(d[chosenXAxis]))
         .attr("cy", d => yLinearScale(d[chosenYAxis]))
-        .attr("r", 20)
+        .attr("r", 15)
         // .attr("fill", "magenta")
         // .attr("opacity", "0.5")
         .classed('stateCircle', true)
