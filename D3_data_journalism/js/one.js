@@ -99,15 +99,15 @@ function updateToolTip(chosenXAxis, chosenYAxis, circlesGroup) {
     xlabel = "In Poverty (%)";
   }
   else if (chosenXAxis == "age"){
-    xlabel = "Age";
+    xlabel = "Age (Median)";
   }
   else {
-    xlabel = "Household Income";
+    xlabel = "Household Income (Median)";
   }
 
   //setting y labels
   if (chosenYAxis == "healthcare") {
-    ylabel = "Lacks Healthcare'";
+    ylabel = "Lacks Healthcare (%)";
   }
   else if(chosenYAxis == "smokes"){
     ylabel = "Smokes (%)";
@@ -121,7 +121,7 @@ function updateToolTip(chosenXAxis, chosenYAxis, circlesGroup) {
 //tooltip
   var toolTip = d3.tip()
     .attr("class", "d3-tip")
-    .offset([80, -60])
+    .offset([100, -50])
     .html(function(d) {
       return (`${d.state}<br>${xlabel} ${d[chosenXAxis]} <br>${ylabel} ${d[chosenYAxis]}`);
     });
@@ -235,7 +235,7 @@ d3.csv("D3_data_journalism/data/data.csv").then(function(stateData) {
         .attr("class", "axisText")
         .attr("value", "age") // value to grab for event listener
         .classed("inactive", true)
-        .text("Age");
+        .text("Age (Median)");
 
     var incomeLabel = xlabelsGroup.append("text")
         .attr("x", 0)
@@ -243,7 +243,7 @@ d3.csv("D3_data_journalism/data/data.csv").then(function(stateData) {
         .attr("class", "axisText")
         .attr("value", "income") // value to grab for event listener
         .classed("inactive", true)
-        .text("Household Income");
+        .text("Household Income (Median)");
 
         //y labels
     var ylabelsGroup = chartGroup.append("g")
@@ -256,7 +256,7 @@ d3.csv("D3_data_journalism/data/data.csv").then(function(stateData) {
         .attr("dy", "3em")
         .attr("value", "healthcare") // value to grab for event listener
         .classed("active", true)
-        .text("Lacks Healthcare");
+        .text("Lacks Healthcare (%)");
 
     var smokesLabel = ylabelsGroup.append("text")
         .attr("transform", "rotate(-90)")
