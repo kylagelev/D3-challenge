@@ -125,7 +125,7 @@ function updateToolTip(chosenXAxis, chosenYAxis, circlesGroup) {
 //tooltip
   var toolTip = d3.tip()
     .attr("class", "d3-tip")
-    .offset([0, -85])
+    .offset([0,0])
     .html(function(d) {
       return (`${d.state}<br>${xlabel} ${d[chosenXAxis]} <br>${ylabel} ${d[chosenYAxis]}`);
     });
@@ -240,13 +240,8 @@ d3.csv("./data/data.csv").then(function(stateData) {
 
     //--------------------------------------------------------------------------------
         // Create a circle text group for the state text abbreviations
-        var circleTextGroup=chartGroup.selectAll(".stateText")
-        .data(stateData);
+        var circleTextGroup=chartGroup.selectAll(".stateText").data(stateData);
 
-        // Step over the text that is already in the graph for the axes labels.
-        // Then add new text elements with the stateText class, with x and y locations
-        // based on the selected X and Y axes
-        // This is set up here to set the initial locations of the circle text group (state abbr)
         circleTextGroup.enter()
             .append("text")
             .classed("stateText", true)
