@@ -252,8 +252,8 @@ d3.csv("D3_data_journalism/data/data.csv").then(function(stateData) {
     var healthcareLabel = ylabelsGroup.append("text")
         .attr("transform", "rotate(-90)")
         .attr("y", 0 - margin.left)
-        .attr("x", -70)
-        .attr("dy", "3.5em")
+        .attr("x", -75)
+        .attr("dy", "3em")
         .attr("value", "healthcare") // value to grab for event listener
         .classed("active", true)
         .text("Lacks Healthcare");
@@ -261,8 +261,8 @@ d3.csv("D3_data_journalism/data/data.csv").then(function(stateData) {
     var smokesLabel = ylabelsGroup.append("text")
         .attr("transform", "rotate(-90)")
         .attr("y", 0 - margin.left)
-        .attr("x", -60)
-        .attr("dy", "2.5em")
+        .attr("x", -65)
+        .attr("dy", "2em")
         .attr("value", "smokes") // value to grab for event listener
         .classed("inactive", true)
         .text("Smokes (%)");
@@ -270,8 +270,8 @@ d3.csv("D3_data_journalism/data/data.csv").then(function(stateData) {
     var obeseLabel = ylabelsGroup.append("text")
         .attr("transform", "rotate(-90)")
         .attr("y", 0 - margin.left)
-        .attr("x", -50)
-        .attr("dy", "1.5em")
+        .attr("x", -55)
+        .attr("dy", "1em")
         .attr("value", "obesity") // value to grab for event listener
         .classed("inactive", true)
         .text("Obese (%)");
