@@ -237,7 +237,7 @@ xlabelsGroup.selectAll("text")
             chosenYAxis = 'healthcare'
         }
         else {
-            chosenYAxis = 'smokes'
+            var chosenYAxis = 'smokes'
         }
 
         // functions here found above csv import

@@ -158,6 +158,8 @@ d3.csv("./data/data.csv").then(function(stateData) {
             data.obesity = +data.obesity;
         });
 
+        console.log(stateData)
+
     // xLinearScale function above csv import
     var xLinearScale = xScale(stateData, chosenXAxis);
 
@@ -180,63 +182,6 @@ d3.csv("./data/data.csv").then(function(stateData) {
         .classed("y-axis", true)
         .call(leftAxis);
 
-    // var circlesState = chartGroup.selectAll(null).data(stateData).enter().append("text");
-
-    // function updatecirclesState (chosenXAxis, chosenYAxis) {
-    //   var circlesState
-    //     .attr("x", function(d) {
-    //         return xLinearScale(d[chosenXAxis]);
-    //         })
-    //     .attr("y", function(d) {
-    //         return yLinearScale(d[chosenYAxis]);
-    //         })
-    //     .text(function(d) {
-    //         return d.abbr;
-    //         })
-    //     .attr("font-family", "sans-serif")
-    //     .attr("font-size", "12px")
-    //     .attr("text-anchor", "middle")
-    //     .attr("fill", "black");
-
-    //     }
-
-
-    //     // Create a circle text group for the state text abbreviations
-    //     var circleTextGroup=chartGroup.selectAll(".stateText")
-    //     .data(data);
-
-    //     // Step over the text that is already in the graph for the axes labels.
-    //     // Then add new text elements with the stateText class, with x and y locations
-    //     // based on the selected X and Y axes
-    //     // This is set up here to set the initial locations of the circle text group (state abbr)
-    //     circleTextGroup.enter()
-    //         .append("text")
-    //         .classed("stateText", true)
-    //         .merge(circleTextGroup)
-    //         .attr("x", d=>xLinearScale(d[chosenXAxis]))
-    //         .attr("y", d=>yLinearScale(d[chosenYAxis])+5)
-    //         .html(d => d.abbr);
-        
-    //     circleTextGroup.exit().remove();
-
-    // // Set up a function that will update the circle text group when new axes are selected
-    // function updateCircleTextGroup(data) {
-    //     circleTextGroup = chartGroup.selectAll(".stateText")
-    //     .data(data);
-
-    //     circleTextGroup.enter()
-    //         .append("text")
-    //         .classed("stateText", true)
-    //         .merge(circleTextGroup)
-    //         .html(d => d.abbr);
-
-    //     circleTextGroup.exit().remove();
-
-    //     return circleTextGroup
-    // }
-
-
-
 
     //--------------------------------------------------------------------------------
         // Create a circle text group for the state text abbreviations
@@ -254,8 +199,7 @@ d3.csv("./data/data.csv").then(function(stateData) {
 
     // Set up a function that will update the circle text group when new axes are selected
     function updateCircleTextGroup(data) {
-        circleTextGroup = chartGroup.selectAll(".stateText")
-        .data(data);
+        circleTextGroup = chartGroup.selectAll(".stateText").data(stateData);
 
         circleTextGroup.enter()
             .append("text")
