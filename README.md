@@ -13,4 +13,3 @@ Feel free to play around and get develop your own insights!
 
 Launched using Github Pages.
 
-(Includes testing.js which is a baseline plot using D3 that was used to refer back to.)
