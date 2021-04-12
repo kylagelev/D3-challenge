@@ -44,8 +44,8 @@ function xScale(stateData, chosenXAxis) {
 //scaling the Y scale based on chosen Y axis
 function yScale(stateData, chosenYAxis) {
     var yLinearScale = d3.scaleLinear()
-    .domain([d3.min(stateData, d => d[chosenXAxis]*0.9),
-    d3.max(stateData, d => d[chosenYAxis]*1.1)
+    .domain([d3.min(stateData, d => d[chosenYAxis]) * 0.8,
+    d3.max(stateData, d => d[chosenYAxis]) *1.2
   ])
     .range([height, 0])
 
@@ -66,7 +66,7 @@ function renderXAxes(newXScale, xAxis) {
 
 //now changing the Y axis scale to selected axis
 function renderYAxes(newYScale, yAxis) {
-    var leftAxis = d3.axisLeft(newYScale, yAxis);
+    var leftAxis = d3.axisLeft(newYScale);
   
     yAxis.transition()
       .duration(1000)
@@ -137,7 +137,7 @@ function updatecircletext(stateabbr, xLinearScale, yLinearScale, chosenXAxis, ch
   stateabbr.transition()
   .duration(1000)
   .attr("x", d => xLinearScale(d[chosenXAxis]))
-  .attr("y", d => yLinearScale(d[chosenYAxis] -.2));
+  .attr("y", d => yLinearScale(d[chosenYAxis]));
 
 return stateabbr;
 }
@@ -193,7 +193,7 @@ d3.csv("D3_data_journalism/data/data.csv").then(function(stateData) {
         .attr("cy", d => yLinearScale(d[chosenYAxis]))
         .attr("r", 15)
         // .attr("fill", "magenta")
-        .attr("opacity", "0.5")
+        // .attr("opacity", "0.5")
         .classed('stateCircle', true)
       
     var stateabbr = chartGroup.selectAll("text")
@@ -346,7 +346,7 @@ d3.csv("D3_data_journalism/data/data.csv").then(function(stateData) {
               circlesGroup = renderCircles(circlesGroup, xLinearScale, yLinearScale, chosenXAxis, chosenYAxis);
 
               // updates tooltips with new info
-              circlesGroup = updateToolTip(chosenXAxis, chosenYAxis, circlesGroup, stareabbr);
+              circlesGroup = updateToolTip(chosenXAxis, chosenYAxis, circlesGroup, stateabbr);
 
               //update state abbr
               stateabbr = updatecircletext(stateabbr, xLinearScale, yLinearScale, chosenXAxis, chosenYAxis)
